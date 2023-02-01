@@ -1,0 +1,79 @@
+<div class="addContainer">
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <div class="contact-details-heading">
+          <div class="contact-details-name">
+            {{returnedData?.name}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="mt-10" fxLayout="column" fxLayoutAlign="space-between stretch">
+    <form [formGroup]="instituteForm">
+      <div fxLayout="column" fxLayoutAlign="space-between stretch">
+        <mat-form-field appearance="outline">
+          <mat-label>Institute</mat-label>
+          <input matInput formControlName="name" required />
+          <mat-error>
+            Institute name is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="space-between stretch">
+        <mat-form-field appearance="outline">
+          <mat-label>City</mat-label>
+          <mat-select formControlName="city">
+            <mat-option *ngFor="let opt of cityDrpDown" value="{{opt?.name}}">
+              {{opt?.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error>
+            City is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="space-between stretch">
+        <mat-form-field appearance="outline">
+          <mat-label>Province</mat-label>
+          <mat-select formControlName="province">
+            <mat-option *ngFor="let opt of provinceDrpDown" value="{{opt?.name}}">
+              {{opt?.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error>
+            Province is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="space-between stretch">
+        <mat-form-field appearance="outline">
+          <mat-label>Sector</mat-label>
+          <mat-select formControlName="sector">
+            <mat-option *ngFor="let opt of sectorDrpDown" value="{{opt?.name}}">
+              {{opt?.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error>
+            Sector is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="space-between stretch">
+        <mat-form-field appearance="outline">
+          <mat-label>Level</mat-label>
+          <input matInput formControlName="level" required />
+          <mat-error>
+            Level is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="end stretch">
+        <button mat-raised-button color="primary" (click)="onSubmit(instituteForm.value)">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

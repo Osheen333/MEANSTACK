@@ -1,0 +1,125 @@
+<div fxLayout="row" fxLayoutAlign="start center" class="mt-20">
+  <div fxLayoutAlign="space-between center" class="ml-10">
+    <mat-form-field appearance="outline">
+      <mat-label>Keyword</mat-label>
+      <input matInput #filter />
+    </mat-form-field>
+  </div>
+  <div fxLayoutAlign="space-between center" class="ml-10">
+    <mat-form-field appearance="outline">
+      <mat-label>City</mat-label>
+      <mat-select (selectionChange)="applyFilter($event)">
+        <mat-option *ngFor="let opt of cityDrpDown" value="{{opt.name}}">
+          {{opt.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div fxLayoutAlign="space-between center" class="ml-10">
+    <mat-form-field appearance="outline">
+      <mat-label>Province</mat-label>
+      <mat-select (selectionChange)="applyFilter($event)">
+        <mat-option *ngFor="let opt of provinceDrpDown" value="{{opt.name}}">
+          {{opt.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div fxLayoutAlign="space-between stretch" class="ml-10">
+    <div class="icon-button-demo">
+      <button mat-raised-button color="primary" (click)="createInstituteModal()">
+        <mat-icon class="col-white">add</mat-icon>
+      </button>
+    </div>
+    <div class="icon-button-demo ml-10">
+      <button mat-raised-button color="warn" (click)="refresh()">
+        <mat-icon class="col-white">refresh
+        </mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tabbable-line">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                <div class="body">
+                  <div class="table-responsive">
+                    <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+                      <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Institute
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.name}}
+                        </mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="city">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>City
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.city}}
+                        </mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="province">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Province
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.province}}
+                        </mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="sector">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Sector
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.sector}}
+                        </mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="level">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Level
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.level}}
+                        </mat-cell>
+                      </ng-container>
+                      <!-- actions -->
+                      <ng-container matColumnDef="actions">
+                        <mat-header-cell class="pr-0" *matHeaderCellDef>Actions
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row; let i=index;" class="pr-0">
+                          <button mat-icon-button color="primary" (click)="$event.stopPropagation()"
+                            (click)="updateInstituteModal(row)">
+                            <mat-icon aria-label="Edit" matTooltip="Edit">edit
+                            </mat-icon>
+                          </button>
+                          <button mat-icon-button color="warn" (click)="$event.stopPropagation()"
+                            (click)="deleteInstitute(row._id)">
+                            <mat-icon aria-label="Delete" matTooltip="Delete">delete
+                            </mat-icon>
+                          </button>
+                        </mat-cell>
+                      </ng-container>
+                      <mat-header-row *matHeaderRowDef="displayedColumns">
+                      </mat-header-row>
+                      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </mat-table>
+                    <!-- Loading spinner -->
+                    <div *ngIf="instituteServiceToPass?.isTblLoading" class="tbl-spinner">
+                      <mat-progress-spinner color="primary" [diameter]="40" mode="indeterminate">
+                      </mat-progress-spinner>
+                    </div>
+                    <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+                      No results
+                    </div>
+                    <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10"
+                      [pageSizeOptions]="[5, 10, 25, 100]">
+                    </mat-paginator>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
